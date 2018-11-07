@@ -42,3 +42,7 @@ p_q_0 = data.apply(lambda row: judge(data['prefix'],data['query_key_0'], l), axi
 <pre><code>D = pd.get_dummies(data,columns = ['tag'])
 #返回的是将tag度热编码后的DataFrame，列名为'tag_0'~'tag_20'</code></pre>
 * A榜最好成绩是利用42维属性，10万样本，LightGBM算法训练得到的分类模型，阈值为0.42，本地F1值为0.7，线上F1值为0.5850
+### 2018.11.7
+* 18点拿到数据，提取prefix，title，query_predict所有文字信息训练word2vec模型，计算各项文字特征距离
+* 跑了一下，计算两列文字之间向量(50维)距离需要25分钟，而B榜的最晚评价时间是22点，所以根本跑不完prefix跟title以及十个query_predict
+的距离，为了赶上最后的测评就跑了prefix和titile的距离，最终线下用了0.44阈值，F1也达到了0.7，但是最终线上F1是0.49，总排名266/2888
